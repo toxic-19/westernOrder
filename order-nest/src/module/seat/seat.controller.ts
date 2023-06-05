@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { SeatService } from './seat.service';
 import { SeatEntity } from '../../entities/Seat.entity';
 import { CreateSeatDto } from './dto/create-seat.dto';
+import { UpdateSeatDto } from 'src/module/seat/dto/update-seat.dto';
 
 @Controller('/seat')
 export class SeatController {
@@ -34,5 +35,19 @@ export class SeatController {
     // TODO 没有参数校验
     console.log('/add', createSeatDto); // { areaId: 2, areaName: 'B区域', tableName: 'B2', capacity: 4 }
     return this.seatService.addSeat(createSeatDto);
+  }
+
+  /**
+   * 修改餐桌信息
+   * @param id
+   * @param updateSeatDto
+   */
+  @Patch('/update/:id')
+  updateSeat(
+    @Param('id') id: string,
+    @Body() updateSeatDto: UpdateSeatDto,
+  ): Promise<SeatEntity> {
+    console.log('controller', updateSeatDto);
+    return this.seatService.updateSeat(id, updateSeatDto);
   }
 }

@@ -15,7 +15,7 @@ export class SeatService {
    */
   async getTableList(): Promise<SeatEntity[]> {
     console.log('dirname', __dirname);
-    return await this.seatRepository.find({ where: { isDelete: false }});
+    return await this.seatRepository.find({ where: { isDelete: false } });
     // return await this.seatRepository.query('select * from seat');
   }
   /**
@@ -39,5 +39,20 @@ export class SeatService {
    */
   async addSeat(seat): Promise<any> {
     return await this.seatRepository.insert(seat);
+  }
+
+  /**
+   * 修改餐桌信息
+   * @param id
+   * @param dto
+   */
+  async updateSeat(id, dto): Promise<any> {
+    const seat = await this.seatRepository.find({ where: { id: id } });
+    const { tableName, capacity } = dto;
+    console.log('update', seat);
+    return await this.seatRepository.update(id, {
+      tableName: tableName,
+      capacity: capacity,
+    });
   }
 }

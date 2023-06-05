@@ -10,11 +10,11 @@ export class CreateSeatDto {
   @IsString()
   readonly areaName: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: '餐桌名称这可不能为空' })
+  @IsString({ message: '餐桌名称得是字符串类型哦' })
   readonly tableName: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '好家伙你得定义可容纳人数啊' })
   @IsNumber()
   readonly capacity: number;
 }

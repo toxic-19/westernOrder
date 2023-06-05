@@ -32,7 +32,12 @@ export class SeatService {
     });
   }
 
-  try(): string {
-    return 'table';
+  /**
+   * 新增餐桌信息
+   * @param seat 餐桌信息对象
+   * @returns
+   */
+  async addSeat(seat): Promise<any> {
+    return await this.seatRepository.insert(seat);
   }
 }

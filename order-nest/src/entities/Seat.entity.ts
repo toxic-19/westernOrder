@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('seat', { schema: 'order' })
+@Entity('seat', { schema: 'order' }) // @Entity表示这是一个实体类
 export class SeatEntity {
   @Column('bigint', { name: 'area_id', nullable: true, comment: '区域id' })
   areaId: string | null;

@@ -6,6 +6,7 @@ import { AppController } from './module/app/app.controller';
 import { AppService } from './module/app/app.service';
 import { SeatModule } from './module/seat/seat.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { myResponse } from './common/response';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   /**
    * 在使用Injectable时 需要将该类添加到模块的providers数组中
    * 以便Angular能够实例化该服务，并在应用程序的组件中使用它
+   * provide全局导入自定义方法到主模块中
    */
-  providers: [AppService],
+  providers: [AppService, { provide: 'My_Response', useValue: myResponse }], // provide键定义Token
 })
 export class AppModule {}

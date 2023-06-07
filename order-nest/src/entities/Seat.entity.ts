@@ -44,7 +44,7 @@ export class SeatEntity {
   })
   amount: string | null;
 
-  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
+  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' }) // id列自动生成的主键
   id: string;
 
   @Column('datetime', {

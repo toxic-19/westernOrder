@@ -1,4 +1,13 @@
-import {Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { SeatService } from './seat.service';
 import { SeatEntity } from '../../entities/Seat.entity';
 import { CreateSeatDto } from './dto/create-seat.dto';
@@ -13,8 +22,15 @@ export class SeatController {
    * @returns [{}]
    */
   @Get('/list')
-  getTableList(): Promise<SeatEntity[]> {
-    return this.seatService.getTableList();
+  async getTableList(@Res() res): Promise<any> {
+    // return this.seatService.getTableList();
+    const list = await this.seatService.getTableList();
+    console.log(list);
+    return res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      message: '操作成功',
+      data: list,
+    });
   }
   /**
    * 根据区域id查询餐桌列表

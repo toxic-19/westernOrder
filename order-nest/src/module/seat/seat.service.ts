@@ -15,7 +15,9 @@ export class SeatService {
    */
   async getTableList(): Promise<SeatEntity[]> {
     console.log('dirname', __dirname);
-    return await this.seatRepository.find({ where: { isDelete: false } });
+    const list = await this.seatRepository.find({ where: { isDelete: false } });
+    // console.log('获取所有餐桌信息', list);
+    return list;
     // return await this.seatRepository.query('select * from seat');
   }
   /**
@@ -48,11 +50,23 @@ export class SeatService {
    */
   async updateSeat(id, dto): Promise<any> {
     const seat = await this.seatRepository.find({ where: { id: id } });
-    const { tableName, capacity } = dto;
     console.log('update', seat);
-    return await this.seatRepository.update(id, {
-      tableName: tableName,
-      capacity: capacity,
+    if (seat.length === 0) {
+      return {
+        code: '250',
+        msg: '当前餐桌并不存在',
+      };
+    }
+    const result = await this.seatRepository.update(id, {
+      tableName: dto.tableName,
+      capacity: dto.capacity,
     });
+    if (result.affected !== 0) {
+      return {
+        code: '200',
+        msg: '修改餐桌成功',
+        data: await this.getTableList(),
+      };
+    }
   }
 }
